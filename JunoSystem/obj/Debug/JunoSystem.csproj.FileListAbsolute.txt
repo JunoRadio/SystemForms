@@ -28,3 +28,40 @@ c:\users\dkdan\documents\visual studio 2017\Projects\JunoSystem\JunoSystem\obj\D
 c:\users\dkdan\documents\visual studio 2017\Projects\JunoSystem\JunoSystem\obj\Debug\JunoSystem.csproj.GenerateResource.Cache
 c:\users\dkdan\documents\visual studio 2017\Projects\JunoSystem\JunoSystem\obj\Debug\JunoSystem.exe
 c:\users\dkdan\documents\visual studio 2017\Projects\JunoSystem\JunoSystem\obj\Debug\JunoSystem.pdb
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\obj\Debug\JunoSystem.csprojResolveAssemblyReference.cache
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\obj\Debug\JunoSystem.frmJunoSistema.resources
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\obj\Debug\JunoSystem.Properties.Resources.resources
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\obj\Debug\JunoSystem.RegisterEmail.resources
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\obj\Debug\JunoSystem.csproj.GenerateResource.Cache
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\obj\Debug\JunoSystem.exe
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\obj\Debug\JunoSystem.pdb
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\JunoSystem.exe.config
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\JunoSystem.exe
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\JunoSystem.pdb
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.Auth.dll
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.Auth.PlatformServices.dll
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.Core.dll
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.dll
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.Drive.v3.dll
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.PlatformServices.dll
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\MailKit.dll
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\MimeKit.dll
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Newtonsoft.Json.dll
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Zlib.Portable.dll
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.pdb
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.xml
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.Auth.pdb
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.Auth.xml
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.Auth.PlatformServices.pdb
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.Auth.PlatformServices.xml
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.Core.pdb
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.Core.xml
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.Drive.v3.pdb
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.Drive.v3.xml
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.PlatformServices.pdb
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Google.Apis.PlatformServices.xml
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\MailKit.xml
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\MimeKit.xml
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Newtonsoft.Json.xml
+C:\Users\dkdan\Documents\GitHub\SystemForms\JunoSystem\bin\Debug\Zlib.Portable.xml

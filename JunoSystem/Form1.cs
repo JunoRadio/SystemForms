@@ -22,64 +22,84 @@ namespace JunoSystem
     {       
         Google.Apis.Auth.OAuth2.UserCredential LCredenciais;
         Google.Apis.Drive.v3.DriveService LServico;
+        string LGoogleDriveOption = "0";
 
         public frmJunoSistema()
         {
-            InitializeComponent();
-            
+            InitializeComponent();            
         }
 
         private void frmJunoSistema_Load(object sender, EventArgs e)
         {
             timer1.Enabled = true;
 
-            ServiceDriveAPI objDriveApi = new ServiceDriveAPI();
+            if (JunoSystem.Properties.Settings.Default.GoogleDriveOption != "")
+                LGoogleDriveOption = JunoSystem.Properties.Settings.Default.GoogleDriveOption.ToString();
 
-            //Buscar Credenciais
-            LCredenciais = objDriveApi.Autenticar();
+            if (LGoogleDriveOption != "0")
+            {
+                ServiceDriveAPI objDriveApi = new ServiceDriveAPI();
 
-            //AbreServiço
-            LServico = objDriveApi.AbrirServico(LCredenciais);
+                //Seach Credenciais
+                LCredenciais = objDriveApi.Autenticar();
 
-            if (LCredenciais == null || LServico == null) lblStatus.Text = "Conectado";
+                //OpenService
+                LServico = objDriveApi.AbrirServico(LCredenciais);
 
-            //Comentar para funcionar na apresentação
-            timer1_Tick(sender, e);
+                if (LCredenciais == null || LServico == null) lblStatus.Text = "Connected";
+            }
+            
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            
+
             ServiceDriveAPI objDriveApi = new ServiceDriveAPI();
 
-            //Realiza o download para realizar a sincronização com banco de dados
-            objDriveApi.Download(LServico, "Juno.csv", "C:\\Juno\\juno.csv");
-            if (objDriveApi.msgErro == "Nenhum Registro") return;
+            if (LGoogleDriveOption != "0")
+            { 
+                //Download to perform database synchronization
+                objDriveApi.Download(LServico, "Juno.csv", "C:\\JunoRadio\\juno.csv");
+                if (objDriveApi.msgErro == "Nenhum Registro") return;
+            }
 
-            //CriaLista
-            List<Importacao> lstImportacao = new List<Importacao>();          
-            string[] PLinhas; //array que vai receber todas as linhas do arquivo
-            try
+            if (JunoSystem.Properties.Settings.Default.GoogleDriveOption.ToString() != "")
             {
-                PLinhas = File.ReadAllLines("C:\\Juno\\Juno.csv");
+                bool SSL = false;
+
+                if (JunoSystem.Properties.Settings.Default.SSL.ToString() == "1") SSL = true;
+
+                Downloadattachment(JunoSystem.Properties.Settings.Default.Server.ToString(),
+                    Convert.ToInt32(JunoSystem.Properties.Settings.Default.Port.ToString()),
+                    JunoSystem.Properties.Settings.Default.Email.ToString(),
+                    JunoSystem.Properties.Settings.Default.Password.ToString(),
+                    SSL);
+            }
+
+            //Create List
+            List<Importacao> lstImportacao = new List<Importacao>();          
+            string[] PLinhas;             try
+            {
+                PLinhas = File.ReadAllLines("C:\\JunoRadio\\Juno.csv");
             }
             catch (Exception)
             {
-                MessageBox.Show("Erro ao Baixar Dados dos servidores da Nasa");
+                MessageBox.Show("Error downloading data from Nasa servers");
                 return;
             }
 
             try
             {
                 string[] PCamposLinha;  
-                foreach (string UmaLinha in PLinhas) //lendo desde 1a linha..não manter cabeçalho no .csv
+                foreach (string UmaLinha in PLinhas)
                 {
-                    //Despresa cabeçalho
+                    
                     if (UmaLinha == "latitude,longitude,brightness,scan,track,acq_date,acq_time,satellite,confidence,version,bright_t31,frp,day_night") continue;
 
                     if (UmaLinha.Replace(" ", "").Length == 0) continue;
-                    PCamposLinha = UmaLinha.Split(','); //divide a linha em um array
-
-                    //validar Código
+                    PCamposLinha = UmaLinha.Split(','); 
+                   
                     PCamposLinha[0] = PCamposLinha[0].Trim();
 
                     string Sql = "INSERT INTO Importacao (Long, Lat, Brilho) ";
@@ -92,7 +112,7 @@ namespace JunoSystem
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao carregar arquivo.\n" + ex.Message, "Qualify - Comercial", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Error loading file.\n" + ex.Message, "Qualify - Comercial", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             finally
@@ -100,28 +120,31 @@ namespace JunoSystem
                 DateTime objData = new DateTime();
                 string PDataHora =  objData.Day.ToString() + "-" + objData.Month.ToString() + "-" + objData.Hour.ToString() + "-" + objData.Minute.ToString();
 
-                //Realiza o download para realizar a sincronização com banco de dados
-                objDriveApi.DeletarItem(LServico, "Juno.csv");
-                System.IO.File.Delete("C:\\Juno\\Juno.csv");
+                if (LGoogleDriveOption != "0")
+                {
+                    //download and Synchronization with database
+                    objDriveApi.DeletarItem(LServico, "Juno.csv");
+                }
+                System.IO.File.Delete("C:\\JunoRadio\\Juno.csv");
             }
         }
 
         private void radInserir_Click(object sender, EventArgs e)
         {
-            btnInserir.Text = "Inserir Device";
+            btnInserir.Text = "Insert Device";
             txtEmail.ReadOnly = true;
 
         }
 
         private void radAlterar_Click(object sender, EventArgs e)
         {
-            btnInserir.Text = "Alterar Device";
+            btnInserir.Text = "Alter Device";
             txtEmail.ReadOnly = true;
         }
 
         private void radSolicitar_Click(object sender, EventArgs e)
         {
-            btnInserir.Text = "Solicitar Device";
+            btnInserir.Text = "Request Device";
             txtEmail.ReadOnly = false;
         }
 
@@ -134,11 +157,11 @@ namespace JunoSystem
                 if (txtDevice.Text != "" && txtDevice.Text != "" && txtLongitude.Text != "")
                 {
                     objLatLong.Updade(txtDevice.Text, txtLatitude.Text, txtLongitude.Text);
-                    MessageBox.Show("Dados cadastrais atualizado");
+                    MessageBox.Show("Updated data");
                 }
                 else
                 {
-                    MessageBox.Show("Existe Campos não Preenchidos");
+                    MessageBox.Show("There are fields not filled");
                 }
                 
             }
@@ -147,11 +170,11 @@ namespace JunoSystem
                 if (txtDevice.Text != "" && txtDevice.Text != "" && txtLongitude.Text != "")
                 {
                     objLatLong.Inserir(txtDevice.Text, txtLatitude.Text, txtLongitude.Text);
-                    MessageBox.Show("Dados Gravados co suecesso");
+                    MessageBox.Show("Updated data");
                 }
                 else
                 {
-                    MessageBox.Show("Existe Campos não Preenchidos");
+                    MessageBox.Show("There are fields not filled");
                 }
                
             }
@@ -160,31 +183,40 @@ namespace JunoSystem
                 if (txtDevice.Text != "" && txtDevice.Text != "" && txtLongitude.Text != "" && txtEmail.Text != "")
                 {
                     objLatLong.Solicitar(txtDevice.Text, txtLatitude.Text, txtLongitude.Text,txtEmail.Text);
-                    MessageBox.Show("Dados Gravados co suecesso");
+                    MessageBox.Show("Updated data");
                 }
                 else
                 {
-                    MessageBox.Show("Existe Campos não Preenchidos");
+                    MessageBox.Show("There are fields not filled");
                 }
             }
         }
 
-        public void DownloadBodyParts()
+        public void Downloadattachment(string Server, int Port,string Email, string Pass, bool SSL)
         {
             using (var client = new ImapClient())
             {
-                client.Connect("imap.gmail.com", 993, SecureSocketOptions.SslOnConnect);
+                //SSL Test
+                if (SSL == true)
+                {
+                    client.Connect(Server, Port, SecureSocketOptions.SslOnConnect);
+                }
+                else
+                {
+                    client.Connect(Server, Port, SecureSocketOptions.None);
+                }                
 
-                client.Authenticate("juno.spaceapp@gmail.com", "nasainjupter");
+                //authenticate
+                client.Authenticate(Email, Pass);
 
+                //Open Email
                 client.Inbox.Open(FolderAccess.ReadOnly);
 
-                // search for messages where the Subject header contains either "MimeKit" or "MailKit"
+                //Search email content FIRMS (email NASA)
                 var query = SearchQuery.SubjectContains("FIRMS").Or(SearchQuery.SubjectContains("FIRMS"));
                 var uids = client.Inbox.Search(query);
 
-                // fetch summary information for the search results (we will want the UID and the BODYSTRUCTURE
-                // of each message so that we can extract the text body and the attachments)
+                
                 var items = client.Inbox.Fetch(uids, MessageSummaryItems.UniqueId | MessageSummaryItems.BodyStructure);
 
                 foreach (var item in items)
@@ -216,7 +248,7 @@ namespace JunoSystem
                             // note: it's possible for this to be null, but most will specify a filename
                             var fileName = part.FileName;
 
-                            var path = Path.Combine(directory, fileName);
+                            var path = Path.Combine(directory, "Juno.csv");
 
                             // decode and save the content to a file
                             using (var stream = File.Create(path))
@@ -227,6 +259,19 @@ namespace JunoSystem
 
                 client.Disconnect(true);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            RegisterEmail objFormEmail = new RegisterEmail();
+            objFormEmail.ShowDialog();
+        }
+
+        private void chkGoogleDrive_Click(object sender, EventArgs e)
+        {
+            if(chkGoogleDrive.Checked) JunoSystem.Properties.Settings.Default.GoogleDriveOption = "1";
+            else JunoSystem.Properties.Settings.Default.GoogleDriveOption = "0";
+            JunoSystem.Properties.Settings.Default.Save();
         }
     }
 }
