@@ -112,7 +112,7 @@ namespace JunoSystem
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading file.\n" + ex.Message, "Qualify - Comercial", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Error loading file.\n" + ex.Message, "Juno", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             finally
